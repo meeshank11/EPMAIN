@@ -1,79 +1,200 @@
+import pandas as pd
+from datetime import datetime, timedelta
+
+# Current date
+current_date = datetime(2025, 3, 17)
+
+# First 40 EARTHPITs (without ID)
+earthpit_data = [
+    {"Name": "315 KVA INDOOR DT RD 32 AD-2", "TestingDate": "12.07.2024"},
+    {"Name": "630 KVA DT RMU,CPSS#3 ,Ph#2 DM RING", "TestingDate": "25.10.2024"},
+    {"Name": "Adharshila DT", "TestingDate": "06.12.2024"},
+    {"Name": "ADITYA ASHIYANA DT-1", "TestingDate": "28.05.2024"},
+    {"Name": "ADITYA ASHIYANA DT-2", "TestingDate": "28.05.2024"},
+    {"Name": "ADITYA ASHIYANA DT-3", "TestingDate": "28.05.2024"},
+    {"Name": "ADITYA ASHIYANA DT-4", "TestingDate": "28.05.2024"},
+    {"Name": "Aditya garden DT-1", "TestingDate": "15.10.2024"},
+    {"Name": "Aditya garden DT-2", "TestingDate": "15.10.2024"},
+    {"Name": "Aditya garden DT-3", "TestingDate": "15.10.2024"},
+    {"Name": "ADITYA GREEN DT", "TestingDate": "17.12.2024"},
+    {"Name": "Adityapur Dies DT", "TestingDate": "13.05.2024"},
+    {"Name": "ANAC DT", "TestingDate": "11.09.2024"},
+    {"Name": "AGRO MILLS DT", "TestingDate": "22.10.2024"},
+    {"Name": "Akriti sign DT", "TestingDate": "28.11.2024"},
+    {"Name": "ALMAMET DT", "TestingDate": "22.07.2024"},
+    {"Name": "AMIT TRADING DT", "TestingDate": "11.12.2024"},
+    {"Name": "Ananad Vihar DT", "TestingDate": "16.10.2024"},
+    {"Name": "AShiyana trade centre DT", "TestingDate": "24.08.2024"},
+    {"Name": "Associate Eng. DT PH1/R-1", "TestingDate": "18.07.2024"},
+    {"Name": "Astha archade DT", "TestingDate": "19.07.2024"},
+    {"Name": "ASTHA FEROTECH DT PH#2", "TestingDate": "23.07.2024"},
+    {"Name": "Auto Mech DT", "TestingDate": "22.10.2024"},
+    {"Name": "Auto Rubber DT", "TestingDate": "12.08.2024"},
+    {"Name": "Autocrat DT", "TestingDate": "03.09.2024"},
+    {"Name": "AV Engg DT", "TestingDate": "08.01.2024"},
+    {"Name": "ARORA FOOD DT", "TestingDate": "13.09.2024"},
+    {"Name": "Bajaj Fairdeal DT", "TestingDate": "16.08.2024"},
+    {"Name": "BAJRANG TOWER DT", "TestingDate": "01.06.2024"},
+    {"Name": "BALAJI DT", "TestingDate": "20.08.2024"},
+    {"Name": "BALAJI ENT DT", "TestingDate": "21.08.2024"},
+    {"Name": "BALAJI KRISHNA DT", "TestingDate": "23.06.2024"},
+    {"Name": "Balram DT", "TestingDate": "20.01.2024"},
+    {"Name": "Bank colony -2 DT", "TestingDate": "16.08.2024"},
+    {"Name": "Bank colony DT", "TestingDate": "16.08.2024"},
+    {"Name": "Banpriya DT PH#1", "TestingDate": "06.12.2024"},
+    {"Name": "BEBCO DT", "TestingDate": "17.06.2024"},
+    {"Name": "BHARADWAJ DT", "TestingDate": "23.10.2024"},
+    {"Name": "Bihar insecticide DT Ph#1", "TestingDate": "03.11.2024"},
+    {"Name": "Blue star Bricks DT", "TestingDate": "23.07.2024"},
+]
+
+# Convert to DataFrame
+df_earthpits = pd.DataFrame(earthpit_data)
+
+# Handle missing testing dates (assume a default or skip)
+df_earthpits['TestingDate'] = df_earthpits['TestingDate'].replace("", "01.01.2024")  # Default for missing dates
+df_earthpits['TestingDate'] = pd.to_datetime(df_earthpits['TestingDate'], format='%d.%m.%Y')
+df_earthpits['DueDate'] = df_earthpits['TestingDate'] + timedelta(days=365)  # 1-year interval
+df_earthpits['DaysRemaining'] = (df_earthpits['DueDate'] - current_date).dt.days
+
+# Coordinate data (subset for brevity; include all relevant entries in practice)
+coord_data = [
+    {"Name": "7 STAR DT", "Y": 86.11534, "X": 22.80371},
+    {"Name": "A V Engg DT/ Precon", "Y": 86.13733, "X": 22.77626},
+    {"Name": "AADHARSHILA DT", "Y": 86.16203, "X": 22.77923},
+    {"Name": "AAKRITI SHINE DT", "Y": 86.08825, "X": 22.82113},
+    {"Name": "AASTHA ARCADE DT", "Y": 86.1641, "X": 22.79347},
+    {"Name": "Aditya Ashiana DT1", "Y": 86.12838, "X": 22.79364},
+    {"Name": "Aditya Ashiana DT2", "Y": 86.12835, "X": 22.79361},
+    {"Name": "Aditya Ashiana DT3", "Y": 86.12832, "X": 22.79359},
+    {"Name": "Aditya Ashiana DT4", "Y": 86.1283, "X": 22.79357},
+    {"Name": "ADITYA GARDEN DT-1", "Y": 86.14341, "X": 22.79485},
+    {"Name": "ADITYA GARDEN DT-2", "Y": 86.14359, "X": 22.79613},
+    {"Name": "ADITYA GARDEN DT-3", "Y": 86.14415, "X": 22.79749},
+    {"Name": "ADITYA GREEN DT", "Y": 86.16907, "X": 22.79119},
+    {"Name": "ADITYAPUR DIES DT", "Y": 86.14588, "X": 22.7898},
+    {"Name": "Agro Mills DT", "Y": 86.14729, "X": 22.78737},
+    {"Name": "ALMAMET DT", "Y": 86.13508, "X": 22.77742},
+    {"Name": "AMIT TRADING DT", "Y": 86.12271, "X": 22.79864},
+    {"Name": "ANAC DT", "Y": 86.15331, "X": 22.78732},
+    {"Name": "ANAND VIHAR DT", "Y": 86.14043, "X": 22.79683},
+    {"Name": "ARORA FOODS DT", "Y": 86.14509, "X": 22.78841},
+    {"Name": "ASHIYANA DT", "Y": 86.15455, "X": 22.79066},
+    {"Name": "ASSOCIATE ENGIFEB DT", "Y": 86.13542, "X": 22.78528},
+    {"Name": "ASTHA FERROTECH DT", "Y": 86.1389, "X": 22.7895},
+    {"Name": "AUTO RUBBER DT", "Y": 86.14951, "X": 22.78654},
+    {"Name": "AUTOMECH ENGG. DT", "Y": 86.14719, "X": 22.78718},
+    {"Name": "Auto Craft DT", "Y": 86.11151, "X": 22.80457},
+    {"Name": "BAJAJ FAIDERAL DT", "Y": 86.14393, "X": 22.78705},
+    {"Name": "BAJRANG TOWER DT", "Y": 86.10016, "X": 22.81681},
+    {"Name": "BALAJI ENTERPRISE DT / LS", "Y": 86.06993, "X": 22.83041},
+    {"Name": "BALAJI KRISHNA DT", "Y": 86.11797, "X": 22.80343},
+    {"Name": "BALRAM APARTMENT DT", "Y": 86.13002, "X": 22.80298},
+    {"Name": "BANK COLONY DT-1", "Y": 86.16195, "X": 22.79518},
+    {"Name": "BANK COLONY DT-2", "Y": 86.16289, "X": 22.79319},
+    {"Name": "BANPRIYA DT", "Y": 86.12689, "X": 22.78365},
+    {"Name": "BEBBCO ENGG. DT", "Y": 86.11351, "X": 22.80887},
+    {"Name": "BHARDWAJ DT", "Y": 86.12278, "X": 22.79856},
+    {"Name": "BHARDWAJ BROTHERS DT", "Y": 86.13404, "X": 22.77774},
+    {"Name": "BIHAR INSECTICIDES DT", "Y": 86.13768, "X": 22.7822},
+    {"Name": "BLUE STAR BRICKS DT / PH#5", "Y": 86.09047, "X": 22.82397},
+]
+df_coords = pd.DataFrame(coord_data)
+
+# Matching function
+def match_coordinates(earthpit_name, coord_df):
+    for coord_name in coord_df['Name']:
+        if (earthpit_name.lower() in coord_name.lower() or 
+            coord_name.lower() in earthpit_name.lower()):
+            match = coord_df[coord_df['Name'] == coord_name]
+            return match.iloc[0]['X'], match.iloc[0]['Y']
+    return None, None
+
+# Add coordinates
+df_earthpits['X'] = df_earthpits['Name'].apply(lambda x: match_coordinates(x, df_coords)[0])
+df_earthpits['Y'] = df_earthpits['Name'].apply(lambda x: match_coordinates(x, df_coords)[1])
+
+# Filter only EARTHPITs with coordinates
+df_earthpits_with_coords = df_earthpits.dropna(subset=['X', 'Y'])
+
+# Save to CSV
+df_earthpits_with_coords.to_csv('earthpits_with_coords.csv', index=False)
+print(f"Found {len(df_earthpits_with_coords)} EARTHPITs with coordinates:")
+print(df_earthpits_with_coords[['Name', 'DueDate', 'DaysRemaining', 'X', 'Y']].head())
+
+# Leaflet HTML code
+html_code = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EARTHPIT Maintenance Map</title>
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map { height: 600px; width: 100%; }
-        /* Blinking animation */
         @keyframes blink {
             0% { opacity: 1; }
             50% { opacity: 0; }
             100% { opacity: 1; }
         }
-        .blink {
-            animation: blink 1s infinite;
-        }
+        .blink { animation: blink 1s infinite; }
     </style>
 </head>
 <body>
     <div id="map"></div>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([51.505, -0.09], 13); // Default center (London), adjust as needed
+        // Initialize map centered on Jamshedpur, India
+        var map = L.map('map').setView([22.80, 86.20], 12);
 
-        // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        // Sample EARTHPIT data (replace with your actual data)
-        const earthpits = [
-            { name: "EARTHPIT_1", lat: 51.5, lng: -0.09, maintenanceDate: "2025-03-20" },
-            { name: "EARTHPIT_2", lat: 51.51, lng: -0.08, maintenanceDate: "2025-04-01" },
-            { name: "EARTHPIT_3", lat: 51.49, lng: -0.1, maintenanceDate: "2025-03-18" }
-        ];
+        // Load and parse CSV
+        Papa.parse('earthpits_with_coords.csv', {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const earthpits = results.data.map(row => ({
+                    name: row.Name,
+                    lat: parseFloat(row.X),
+                    lng: parseFloat(row.Y),
+                    dueDate: row.DueDate,
+                    daysRemaining: parseInt(row.DaysRemaining)
+                }));
 
-        // Current date (as per your system context: March 17, 2025)
-        const currentDate = new Date("2025-03-17");
+                earthpits.forEach(earthpit => {
+                    const isNear = earthpit.daysRemaining <= 7 && earthpit.daysRemaining >= 0;
+                    const markerColor = isNear ? 'red' : earthpit.daysRemaining < 0 ? 'gray' : 'blue';
 
-        // Function to check if maintenance is near (within 7 days)
-        function isMaintenanceNear(maintenanceDate) {
-            const maintDate = new Date(maintenanceDate);
-            const diffTime = maintDate - currentDate;
-            const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert to days
-            return diffDays <= 7 && diffDays >= 0; // Within 7 days ahead
-        }
+                    const markerIcon = L.divIcon({
+                        className: isNear ? 'blink' : '',
+                        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
+                        iconSize: [20, 20]
+                    });
 
-        // Add markers to the map
-        earthpits.forEach(earthpit => {
-            const isNear = isMaintenanceNear(earthpit.maintenanceDate);
-            const markerColor = isNear ? 'red' : 'blue'; // Red if near, blue otherwise
-
-            // Create a custom icon (circle marker)
-            const markerIcon = L.divIcon({
-                className: isNear ? 'blink' : '', // Add blink class if near
-                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
-                iconSize: [20, 20]
-            });
-
-            // Add marker to map
-            const marker = L.marker([earthpit.lat, earthpit.lng], { icon: markerIcon }).addTo(map);
-
-            // Popup with details
-            marker.bindPopup(`
-                <b>${earthpit.name}</b><br>
-                Maintenance Date: ${earthpit.maintenanceDate}<br>
-                Status: ${isNear ? 'Due Soon' : 'Not Due'}
-            `);
+                    const marker = L.marker([earthpit.lat, earthpit.lng], { icon: markerIcon }).addTo(map);
+                    marker.bindPopup(`
+                        <b>${earthpit.name}</b><br>
+                        Due Date: ${earthpit.dueDate.split(' ')[0]}<br>
+                        Days Remaining: ${earthpit.daysRemaining}<br>
+                        Status: ${isNear ? 'Due Soon' : earthpit.daysRemaining < 0 ? 'Overdue' : 'Not Due'}
+                    `);
+                });
+            }
         });
     </script>
 </body>
 </html>
+"""
+
+# Write HTML to file
+with open('map.html', 'w') as f:
+    f.write(html_code)
+
+print("Map HTML file 'map.html' has been generated.")
