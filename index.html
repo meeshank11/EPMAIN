@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EARTHPIT Maintenance Map</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+        /* Blinking animation */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([51.505, -0.09], 13); // Default center (London), adjust as needed
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Sample EARTHPIT data (replace with your actual data)
+        const earthpits = [
+            { name: "EARTHPIT_1", lat: 51.5, lng: -0.09, maintenanceDate: "2025-03-20" },
+            { name: "EARTHPIT_2", lat: 51.51, lng: -0.08, maintenanceDate: "2025-04-01" },
+            { name: "EARTHPIT_3", lat: 51.49, lng: -0.1, maintenanceDate: "2025-03-18" }
+        ];
+
+        // Current date (as per your system context: March 17, 2025)
+        const currentDate = new Date("2025-03-17");
+
+        // Function to check if maintenance is near (within 7 days)
+        function isMaintenanceNear(maintenanceDate) {
+            const maintDate = new Date(maintenanceDate);
+            const diffTime = maintDate - currentDate;
+            const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert to days
+            return diffDays <= 7 && diffDays >= 0; // Within 7 days ahead
+        }
+
+        // Add markers to the map
+        earthpits.forEach(earthpit => {
+            const isNear = isMaintenanceNear(earthpit.maintenanceDate);
+            const markerColor = isNear ? 'red' : 'blue'; // Red if near, blue otherwise
+
+            // Create a custom icon (circle marker)
+            const markerIcon = L.divIcon({
+                className: isNear ? 'blink' : '', // Add blink class if near
+                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
+                iconSize: [20, 20]
+            });
+
+            // Add marker to map
+            const marker = L.marker([earthpit.lat, earthpit.lng], { icon: markerIcon }).addTo(map);
+
+            // Popup with details
+            marker.bindPopup(`
+                <b>${earthpit.name}</b><br>
+                Maintenance Date: ${earthpit.maintenanceDate}<br>
+                Status: ${isNear ? 'Due Soon' : 'Not Due'}
+            `);
+        });
+    </script>
+</body>
+</html>
