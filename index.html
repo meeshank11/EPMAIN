@@ -15,6 +15,7 @@
         }
         .legend div { margin-bottom: 5px; display: flex; align-items: center; }
         .legend span { width: 15px; height: 15px; display: inline-block; margin-right: 5px; }
+        .popup-content { font-size: 12px; line-height: 1.3; }
     </style>
 </head>
 <body>
@@ -34,46 +35,45 @@
             attribution: '© Google Maps'
         }).addTo(map);
         const transformers = [
-            { name: "Adharshila DT", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.77923, lng: 86.16203 },
-            { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79364, lng: 86.12838 },
-            { name: "ADITYA ASHIYANA DT-2", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79361, lng: 86.12835 },
-            { name: "ADITYA ASHIYANA DT-3", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79359, lng: 86.12832 },
-            { name: "ADITYA ASHIYANA DT-4", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79357, lng: 86.1283 },
-            { name: "Aditya garden DT-1", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79485, lng: 86.14341 },
-            { name: "Aditya garden DT-2", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79613, lng: 86.14359 },
-            { name: "Aditya garden DT-3", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79749, lng: 86.14415 },
-            { name: "ADITYA GREEN DT", testingDate: "2024-12-17", dueDate: "2025-12-17", lat: 22.79119, lng: 86.16907 },
-            { name: "Adityapur Dies DT", testingDate: "2024-05-13", dueDate: "2025-05-13", lat: 22.7898, lng: 86.14588 },
-            { name: "ANAC DT", testingDate: "2024-09-11", dueDate: "2025-09-11", lat: 22.78732, lng: 86.15331 },
-            { name: "AGRO MILLS DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78737, lng: 86.14729 },
-            { name: "Akriti sign DT", testingDate: "2024-11-28", dueDate: "2025-11-28", lat: 22.82113, lng: 86.08825 },
-            { name: "ALMAMET DT", testingDate: "2024-07-22", dueDate: "2025-07-22", lat: 22.77742, lng: 86.13508 },
-            { name: "AMIT TRADING DT", testingDate: "2024-12-11", dueDate: "2025-12-11", lat: 22.79864, lng: 86.12271 },
-            { name: "Ananad Vihar DT", testingDate: "2024-10-16", dueDate: "2025-10-16", lat: 22.79683, lng: 86.14043 },
-            { name: "AShiyana trade centre DT", testingDate: "2024-08-24", dueDate: "2025-08-24", lat: 22.79066, lng: 86.15455 },
-            { name: "Associate Eng. DT PH1/R-1", testingDate: "2024-07-18", dueDate: "2025-07-18", lat: 22.78528, lng: 86.13542 },
-            { name: "Astha archade DT", testingDate: "2024-07-19", dueDate: "2025-07-19", lat: 22.79347, lng: 86.1641 },
-            { name: "ASTHA FEROTECH DT PH#2", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.7895, lng: 86.1389 },
-            { name: "Auto Mech DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78718, lng: 86.14719 },
-            { name: "Auto Rubber DT", testingDate: "2024-08-12", dueDate: "2025-08-12", lat: 22.78654, lng: 86.14951 },
-            { name: "AV Engg DT", testingDate: "2024-01-08", dueDate: "2025-01-08", lat: 22.77626, lng: 86.13733 },
-            { name: "ARORA FOOD DT", testingDate: "2024-09-13", dueDate: "2025-09-13", lat: 22.78841, lng: 86.14509 },
-            { name: "Bajaj Fairdeal DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.78705, lng: 86.14393 },
-            { name: "BAJRANG TOWER DT", testingDate: "2024-06-01", dueDate: "2025-06-01", lat: 22.81681, lng: 86.10016 },
-            { name: "BALAJI ENT DT", testingDate: "2024-08-21", dueDate: "2025-08-21", lat: 22.83041, lng: 86.06993 },
-            { name: "BALAJI KRISHNA DT", testingDate: "2024-06-23", dueDate: "2025-06-23", lat: 22.80343, lng: 86.11797 },
-            { name: "Balram DT", testingDate: "2024-01-20", dueDate: "2025-01-20", lat: 22.80298, lng: 86.13002 },
-            { name: "Bank colony -2 DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79319, lng: 86.16289 },
-            { name: "Bank colony DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79518, lng: 86.16195 },
-            { name: "Banpriya DT PH#1", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.78365, lng: 86.12689 },
-            { name: "BEBCO DT", testingDate: "2024-06-17", dueDate: "2025-06-17", lat: 22.80887, lng: 86.11351 },
-            { name: "BHARADWAJ DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.79856, lng: 86.12278 },
-            { name: "Bihar insecticide DT Ph#1", testingDate: "2024-11-03", dueDate: "2025-11-03", lat: 22.7822, lng: 86.13768 },
-            { name: "Blue star Bricks DT", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.82397, lng: 86.09047 },
-            { name: "Auto Craft DT", testingDate: "2024-09-03", dueDate: "2025-09-03", lat: 22.80457, lng: 86.11151 },
-            { name: "BHARDWAJ BROTHERS DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.77774, lng: 86.13404 },
-            { name: "BLUE STAR BRICKS DT / PH#5", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.82397, lng: 86.09047 },
-            { name: "seven star DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.80371, lng: 86.11534 }
+            { name: "630 KVA DT RMU,CPSS#3 ,Ph#2 DM RING", testingDate: "2024-10-25", dueDate: "2025-10-25", lat: 22.78758125, lng: 86.15272802, neutral: 0.2, la: "-", equipment: 0.2 },
+            { name: "Adharshila DT", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.7792339, lng: 86.1620281, neutral: 0.2, la: "-", equipment: 0.2 },
+            { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79363993, lng: 86.12838091, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "ADITYA ASHIYANA DT-2", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79361458, lng: 86.12834578, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "ADITYA ASHIYANA DT-3", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79358801, lng: 86.12832325, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "ADITYA ASHIYANA DT-4", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.7935717, lng: 86.12830412, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "Aditya garden DT-1", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79484937, lng: 86.14340649, neutral: 0.2, la: "-", equipment: 0.2 },
+            { name: "Aditya garden DT-2", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79612978, lng: 86.1435916, neutral: 0.2, la: "-", equipment: 0.2 },
+            { name: "Aditya garden DT-3", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.7974856, lng: 86.14414686, neutral: 0.2, la: "-", equipment: 0.3 },
+            { name: "ADITYA GREEN DT", testingDate: "2024-12-17", dueDate: "2025-12-17", lat: 22.79119245, lng: 86.16906597, neutral: 1.4, la: 1.4, equipment: 1.4 },
+            { name: "Adityapur Dies DT", testingDate: "2024-05-13", dueDate: "2025-05-13", lat: 22.78979784, lng: 86.14588472, neutral: 2, la: 2, equipment: 2 },
+            { name: "ANAC DT", testingDate: "2024-09-11", dueDate: "2025-09-11", lat: 22.78731513, lng: 86.15330834, neutral: 0.2, la: 0.2, equipment: 0.2 },
+            { name: "AGRO MILLS DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78737131, lng: 86.14728632, neutral: 1.2, la: 1.2, equipment: 1.2 },
+            { name: "Akriti sign DT", testingDate: "2024-11-28", dueDate: "2025-11-28", lat: 22.8211328, lng: 86.0882513, neutral: 0.1, la: 1.6, equipment: 0.8 },
+            { name: "ALMAMET DT", testingDate: "2024-07-22", dueDate: "2025-07-22", lat: 22.77742411, lng: 86.13508266, neutral: 0.1, la: 0.1, equipment: 0.1 },
+            { name: "AMIT TRADING DT", testingDate: "2024-12-11", dueDate: "2025-12-11", lat: 22.7986425, lng: 86.1227106, neutral: 0.5, la: "-", equipment: 0.5 },
+            { name: "Ananad Vihar DT", testingDate: "2024-10-16", dueDate: "2025-10-16", lat: 22.79683105, lng: 86.14042515, neutral: "-", la: 1.2, equipment: 0.5 },
+            { name: "AShiyana trade centre DT", testingDate: "2024-08-24", dueDate: "2025-08-24", lat: 22.7906608, lng: 86.1545459, neutral: 0.4, la: 1.5, equipment: 1.2 },
+            { name: "Associate Eng. DT PH1/R-1", testingDate: "2024-07-18", dueDate: "2025-07-18", lat: 22.78528332, lng: 86.13542227, neutral: 2.4, la: 2.4, equipment: 2.4 },
+            { name: "Astha archade DT", testingDate: "2024-07-19", dueDate: "2025-07-19", lat: 22.79347284, lng: 86.1640985, neutral: 0.8, la: 0.8, equipment: 0.8 },
+            { name: "ASTHA FEROTECH DT PH#2", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.78949715, lng: 86.13890276, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "Auto Mech DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78717586, lng: 86.14719266, neutral: 1, la: "-", equipment: 1 },
+            { name: "Auto Rubber DT", testingDate: "2024-08-12", dueDate: "2025-08-12", lat: 22.78654405, lng: 86.14950619, neutral: 1.5, la: "-", equipment: 1.5 },
+            { name: "Autocrat DT", testingDate: "2024-09-03", dueDate: "2025-09-03", lat: 22.8046112, lng: 86.1109226, neutral: 1, la: 1, equipment: 1 },
+            { name: "AV Engg DT", testingDate: "2024-01-08", dueDate: "2025-01-08", lat: 22.7762601, lng: 86.13732606, neutral: 0.2, la: "-", equipment: 0.2 },
+            { name: "ARORA FOOD DT", testingDate: "2024-09-13", dueDate: "2025-09-13", lat: 22.78841376, lng: 86.1450868, neutral: 1.2, la: 1.3, equipment: 1.2 },
+            { name: "Bajaj Fairdeal DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.78704754, lng: 86.14393151, neutral: 0.7, la: 1.5, equipment: 1.1 },
+            { name: "BAJRANG TOWER DT", testingDate: "2024-06-01", dueDate: "2025-06-01", lat: 22.81680728, lng: 86.10015887, neutral: 1.3, la: "-", equipment: 0.3 },
+            { name: "BALAJI DT", testingDate: "2024-08-20", dueDate: "2025-08-20", lat: 22.83041121, lng: 86.06993467, neutral: 0.1, la: "-", equipment: 0.1 },
+            { name: "BALAJI ENT DT", testingDate: "2024-08-21", dueDate: "2025-08-21", lat: 22.83041121, lng: 86.06993467, neutral: 2.1, la: "-", equipment: 2.1 },
+            { name: "BALAJI KRISHNA DT", testingDate: "2024-06-23", dueDate: "2025-06-23", lat: 22.8034256, lng: 86.1179699, neutral: 1, la: 0.8, equipment: 0.9 },
+            { name: "Balram DT", testingDate: "2024-01-20", dueDate: "2025-01-20", lat: 22.80298299, lng: 86.13001562, neutral: 0.2, la: 0.2, equipment: 0.2 },
+            { name: "Bank colony -2 DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79318511, lng: 86.16288635, neutral: 0.3, la: 0.3, equipment: 0.3 },
+            { name: "Bank colony DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79517825, lng: 86.16195183, neutral: 0.8, la: 0.8, equipment: 0.8 },
+            { name: "Banpriya DT PH#1", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.78364782, lng: 86.12688933, neutral: 1, la: 1, equipment: 1 },
+            { name: "BEBCO DT", testingDate: "2024-06-17", dueDate: "2025-06-17", lat: 22.8088728, lng: 86.11351086, neutral: 0.6, la: 0.6, equipment: 0.6 },
+            { name: "BHARADWAJ DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.79855957, lng: 86.12277532, neutral: 1.2, la: 1.2, equipment: 1.2 },
+            { name: "Bihar insecticide DT Ph#1", testingDate: "2024-11-03", dueDate: "2025-11-03", lat: 22.78219557, lng: 86.13768337, neutral: 0.9, la: "-", equipment: 0.4 },
+            { name: "Blue star Bricks DT", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.823974, lng: 86.0904699, neutral: 0.7, la: 0.7, equipment: 0.7 }
         ];
         const currentDate = new Date("2025-03-17");
         function getStatus(dueDate) {
@@ -91,7 +91,18 @@
                 iconSize: [20, 20]
             });
             const marker = L.marker([transformer.lat, transformer.lng], { icon: markerIcon }).addTo(map);
-            marker.bindPopup(`<b>${transformer.name}</b><br>Testing Date: ${transformer.testingDate}<br>Due Date: ${transformer.dueDate}<br>Status: ${status}`);
+            marker.bindPopup(`
+                <div class="popup-content">
+                    <b>${transformer.name}</b><br>
+                    Testing Date: ${transformer.testingDate}<br>
+                    Due Date: ${transformer.dueDate}<br>
+                    Status: ${status}<br>
+                    Combined Resistance:<br>
+                    - Neutral: ${transformer.neutral} Ω<br>
+                    - LA: ${transformer.la} Ω<br>
+                    - Equipment: ${transformer.equipment} Ω
+                </div>
+            `);
             if (status === "Due Soon") {
                 setInterval(() => {
                     const element = document.getElementById(transformer.name);
