@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformer Testing Map</title>
+    <title>Earth Pit Status Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 600px; width: 100%; }
-        .legend { 
-            background: white; padding: 10px; border-radius: 5px; 
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; }
+        #map { height: 100vh; width: 100%; }
+        h1 { text-align: center; padding: 10px; font-size: 24px; background: #007bff; color: white; margin: 0; }
+        .legend {
+            background: white; padding: 10px; border-radius: 5px;
             position: absolute; bottom: 10px; left: 10px; z-index: 1000;
         }
         .legend div { margin-bottom: 5px; display: flex; align-items: center; }
@@ -16,6 +18,7 @@
     </style>
 </head>
 <body>
+    <h1>Earth Pit Status of Seraikela Power Services</h1>
     <div id="map"></div>
     <div class="legend">
         <b>Legend:</b>
@@ -23,55 +26,72 @@
         <div><span style="background: orange; border: 1px solid black;"></span> Overdue</div>
         <div><span style="background: blue; border: 1px solid black;"></span> Not Due</div>
     </div>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         var map = L.map('map').setView([22.78, 86.16], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
             maxZoom: 19,
-            attribution: '&copy; OpenStreetMap'
+            attribution: '© Google Maps'
         }).addTo(map);
-
         const transformers = [
             { name: "Adharshila DT", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.77923, lng: 86.16203 },
             { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79364, lng: 86.12838 },
             { name: "ADITYA ASHIYANA DT-2", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79361, lng: 86.12835 },
             { name: "ADITYA ASHIYANA DT-3", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79359, lng: 86.12832 },
             { name: "ADITYA ASHIYANA DT-4", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79357, lng: 86.1283 },
-            { name: "Aditya garden DT-1", testingDate: "2024-03-20", dueDate: "2025-03-20", lat: 22.79485, lng: 86.14341 },
+            { name: "Aditya garden DT-1", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79485, lng: 86.14341 },
             { name: "Aditya garden DT-2", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79613, lng: 86.14359 },
-            { name: "Aditya garden DT-3", testingDate: "2024-03-15", dueDate: "2025-03-15", lat: 22.79749, lng: 86.14415 },
+            { name: "Aditya garden DT-3", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79749, lng: 86.14415 },
             { name: "ADITYA GREEN DT", testingDate: "2024-12-17", dueDate: "2025-12-17", lat: 22.79119, lng: 86.16907 },
             { name: "Adityapur Dies DT", testingDate: "2024-05-13", dueDate: "2025-05-13", lat: 22.7898, lng: 86.14588 },
             { name: "ANAC DT", testingDate: "2024-09-11", dueDate: "2025-09-11", lat: 22.78732, lng: 86.15331 },
             { name: "AGRO MILLS DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78737, lng: 86.14729 },
             { name: "Akriti sign DT", testingDate: "2024-11-28", dueDate: "2025-11-28", lat: 22.82113, lng: 86.08825 },
+            { name: "ALMAMET DT", testingDate: "2024-07-22", dueDate: "2025-07-22", lat: 22.77742, lng: 86.13508 },
+            { name: "AMIT TRADING DT", testingDate: "2024-12-11", dueDate: "2025-12-11", lat: 22.79864, lng: 86.12271 },
+            { name: "Ananad Vihar DT", testingDate: "2024-10-16", dueDate: "2025-10-16", lat: 22.79683, lng: 86.14043 },
+            { name: "AShiyana trade centre DT", testingDate: "2024-08-24", dueDate: "2025-08-24", lat: 22.79066, lng: 86.15455 },
+            { name: "Associate Eng. DT PH1/R-1", testingDate: "2024-07-18", dueDate: "2025-07-18", lat: 22.78528, lng: 86.13542 },
+            { name: "Astha archade DT", testingDate: "2024-07-19", dueDate: "2025-07-19", lat: 22.79347, lng: 86.1641 },
+            { name: "ASTHA FEROTECH DT PH#2", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.7895, lng: 86.1389 },
+            { name: "Auto Mech DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78718, lng: 86.14719 },
+            { name: "Auto Rubber DT", testingDate: "2024-08-12", dueDate: "2025-08-12", lat: 22.78654, lng: 86.14951 },
+            { name: "AV Engg DT", testingDate: "2024-01-08", dueDate: "2025-01-08", lat: 22.77626, lng: 86.13733 },
+            { name: "ARORA FOOD DT", testingDate: "2024-09-13", dueDate: "2025-09-13", lat: 22.78841, lng: 86.14509 },
+            { name: "Bajaj Fairdeal DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.78705, lng: 86.14393 },
+            { name: "BAJRANG TOWER DT", testingDate: "2024-06-01", dueDate: "2025-06-01", lat: 22.81681, lng: 86.10016 },
+            { name: "BALAJI ENT DT", testingDate: "2024-08-21", dueDate: "2025-08-21", lat: 22.83041, lng: 86.06993 },
+            { name: "BALAJI KRISHNA DT", testingDate: "2024-06-23", dueDate: "2025-06-23", lat: 22.80343, lng: 86.11797 },
+            { name: "Balram DT", testingDate: "2024-01-20", dueDate: "2025-01-20", lat: 22.80298, lng: 86.13002 },
+            { name: "Bank colony -2 DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79319, lng: 86.16289 },
+            { name: "Bank colony DT", testingDate: "2024-08-16", dueDate: "2025-08-16", lat: 22.79518, lng: 86.16195 },
+            { name: "Banpriya DT PH#1", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.78365, lng: 86.12689 },
+            { name: "BEBCO DT", testingDate: "2024-06-17", dueDate: "2025-06-17", lat: 22.80887, lng: 86.11351 },
+            { name: "BHARADWAJ DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.79856, lng: 86.12278 },
+            { name: "Bihar insecticide DT Ph#1", testingDate: "2024-11-03", dueDate: "2025-11-03", lat: 22.7822, lng: 86.13768 },
+            { name: "Blue star Bricks DT", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.82397, lng: 86.09047 },
+            { name: "Auto Craft DT", testingDate: "2024-09-03", dueDate: "2025-09-03", lat: 22.80457, lng: 86.11151 },
+            { name: "BHARDWAJ BROTHERS DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.77774, lng: 86.13404 },
+            { name: "BLUE STAR BRICKS DT / PH#5", testingDate: "2024-07-23", dueDate: "2025-07-23", lat: 22.82397, lng: 86.09047 },
+            { name: "seven star DT", testingDate: "2024-10-23", dueDate: "2025-10-23", lat: 22.80371, lng: 86.11534 }
         ];
-
         const currentDate = new Date("2025-03-17");
-
         function getStatus(dueDate) {
             const testDate = new Date(dueDate);
             const diffDays = (testDate - currentDate) / (1000 * 60 * 60 * 24);
-            
             if (diffDays < 0) return { status: "Overdue", color: "orange" };
             if (diffDays <= 7) return { status: "Due Soon", color: "red" };
             return { status: "Not Due", color: "blue" };
         }
-
         transformers.forEach(transformer => {
             const { status, color } = getStatus(transformer.dueDate);
-
             const markerIcon = L.divIcon({
                 className: "",
                 html: `<div id="${transformer.name}" style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
                 iconSize: [20, 20]
             });
-
             const marker = L.marker([transformer.lat, transformer.lng], { icon: markerIcon }).addTo(map);
             marker.bindPopup(`<b>${transformer.name}</b><br>Testing Date: ${transformer.testingDate}<br>Due Date: ${transformer.dueDate}<br>Status: ${status}`);
-
             if (status === "Due Soon") {
                 setInterval(() => {
                     const element = document.getElementById(transformer.name);
