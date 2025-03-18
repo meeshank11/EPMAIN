@@ -3,76 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EARTHPIT Maintenance Map</title>
-    <!-- Leaflet CSS -->
+    <title>Transformer Testing Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map { height: 600px; width: 100%; }
-        /* Blinking animation */
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
+        .legend { 
+            background: white; padding: 10px; border-radius: 5px; 
+            position: absolute; bottom: 10px; left: 10px; z-index: 1000;
         }
-        .blink {
-            animation: blink 1s infinite;
-        }
+        .legend div { margin-bottom: 5px; display: flex; align-items: center; }
+        .legend span { width: 15px; height: 15px; display: inline-block; margin-right: 5px; }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <div class="legend">
+        <b>Legend:</b>
+        <div><span style="background: red; border: 1px solid black;"></span> Testing Due Soon (≤7 days)</div>
+        <div><span style="background: orange; border: 1px solid black;"></span> Overdue</div>
+        <div><span style="background: blue; border: 1px solid black;"></span> Not Due</div>
+    </div>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([51.505, -0.09], 13); // Default center (London), adjust as needed
+        var map = L.map('map').setView([22.78, 86.16], 13);
 
-        // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        // Sample EARTHPIT data (replace with your actual data)
-        const earthpits = [
-            { name: "EARTHPIT_1", lat: 51.5, lng: -0.09, maintenanceDate: "2025-03-20" },
-            { name: "EARTHPIT_2", lat: 51.51, lng: -0.08, maintenanceDate: "2025-04-01" },
-            { name: "EARTHPIT_3", lat: 51.49, lng: -0.1, maintenanceDate: "2025-03-18" }
+        const transformers = [
+            { name: "315 KVA INDOOR DT RD 32 AD-2", testingDate: "2024-07-12", lat: 22.77923, lng: 86.16203 },
+            { name: "630 KVA DT RMU, CPSS#3, Ph#2 DM RING", testingDate: "2024-10-25", lat: 22.79364, lng: 86.12838 },
+            { name: "Adharshila DT", testingDate: "2024-12-06", lat: 22.77923, lng: 86.16203 },
+            { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", lat: 22.793, lng: 86.120 } // Corrected coordinates
         ];
 
-        // Current date (as per your system context: March 17, 2025)
         const currentDate = new Date("2025-03-17");
 
-        // Function to check if maintenance is near (within 7 days)
-        function isMaintenanceNear(maintenanceDate) {
-            const maintDate = new Date(maintenanceDate);
-            const diffTime = maintDate - currentDate;
-            const diffDays = diffTime / (1000 * 60 * 60 * 24); // Convert to days
-            return diffDays <= 7 && diffDays >= 0; // Within 7 days ahead
+        function getStatus(testingDate) {
+            const testDate = new Date(testingDate);
+            const diffDays = (testDate - currentDate) / (1000 * 60 * 60 * 24);
+            
+            if (diffDays < 0) return { status: "Overdue", color: "orange" };
+            if (diffDays <= 7) return { status: "Due Soon", color: "red" };
+            return { status: "Not Due", color: "blue" };
         }
 
-        // Add markers to the map
-        earthpits.forEach(earthpit => {
-            const isNear = isMaintenanceNear(earthpit.maintenanceDate);
-            const markerColor = isNear ? 'red' : 'blue'; // Red if near, blue otherwise
+        transformers.forEach(transformer => {
+            const { status, color } = getStatus(transformer.testingDate);
 
-            // Create a custom icon (circle marker)
             const markerIcon = L.divIcon({
-                className: isNear ? 'blink' : '', // Add blink class if near
-                html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
+                className: "",
+                html: `<div id="${transformer.name}" style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid black;"></div>`,
                 iconSize: [20, 20]
             });
 
-            // Add marker to map
-            const marker = L.marker([earthpit.lat, earthpit.lng], { icon: markerIcon }).addTo(map);
+            const marker = L.marker([transformer.lat, transformer.lng], { icon: markerIcon }).addTo(map);
+            marker.bindPopup(`<b>${transformer.name}</b><br>Testing Date: ${transformer.testingDate}<br>Status: ${status}`);
 
-            // Popup with details
-            marker.bindPopup(`
-                <b>${earthpit.name}</b><br>
-                Maintenance Date: ${earthpit.maintenanceDate}<br>
-                Status: ${isNear ? 'Due Soon' : 'Not Due'}
-            `);
+            if (status === "Due Soon") {
+                setInterval(() => {
+                    const element = document.getElementById(transformer.name);
+                    if (element) element.style.opacity = element.style.opacity === "0" ? "1" : "0";
+                }, 1000);
+            }
         });
     </script>
 </body>
