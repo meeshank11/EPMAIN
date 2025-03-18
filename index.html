@@ -34,16 +34,25 @@
         }).addTo(map);
 
         const transformers = [
-            { name: "315 KVA INDOOR DT RD 32 AD-2", testingDate: "2024-07-12", lat: 22.77923, lng: 86.16203 },
-            { name: "630 KVA DT RMU, CPSS#3, Ph#2 DM RING", testingDate: "2024-10-25", lat: 22.79364, lng: 86.12838 },
-            { name: "Adharshila DT", testingDate: "2024-12-06", lat: 22.77923, lng: 86.16203 },
-            { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", lat: 22.793, lng: 86.120 } // Corrected coordinates
+            { name: "Adharshila DT", testingDate: "2024-12-06", dueDate: "2025-12-06", lat: 22.77923, lng: 86.16203 },
+            { name: "ADITYA ASHIYANA DT-1", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79364, lng: 86.12838 },
+            { name: "ADITYA ASHIYANA DT-2", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79361, lng: 86.12835 },
+            { name: "ADITYA ASHIYANA DT-3", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79359, lng: 86.12832 },
+            { name: "ADITYA ASHIYANA DT-4", testingDate: "2024-05-28", dueDate: "2025-05-28", lat: 22.79357, lng: 86.1283 },
+            { name: "Aditya garden DT-1", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79485, lng: 86.14341 },
+            { name: "Aditya garden DT-2", testingDate: "2024-10-15", dueDate: "2025-10-15", lat: 22.79613, lng: 86.14359 },
+            { name: "Aditya garden DT-3", testingDate: "2024-03-15", dueDate: "2025-03-15", lat: 22.79749, lng: 86.14415 },
+            { name: "ADITYA GREEN DT", testingDate: "2024-12-17", dueDate: "2025-12-17", lat: 22.79119, lng: 86.16907 },
+            { name: "Adityapur Dies DT", testingDate: "2024-05-13", dueDate: "2025-05-13", lat: 22.7898, lng: 86.14588 },
+            { name: "ANAC DT", testingDate: "2024-09-11", dueDate: "2025-09-11", lat: 22.78732, lng: 86.15331 },
+            { name: "AGRO MILLS DT", testingDate: "2024-10-22", dueDate: "2025-10-22", lat: 22.78737, lng: 86.14729 },
+            { name: "Akriti sign DT", testingDate: "2024-11-28", dueDate: "2025-11-28", lat: 22.82113, lng: 86.08825 },
         ];
 
         const currentDate = new Date("2025-03-17");
 
-        function getStatus(testingDate) {
-            const testDate = new Date(testingDate);
+        function getStatus(dueDate) {
+            const testDate = new Date(dueDate);
             const diffDays = (testDate - currentDate) / (1000 * 60 * 60 * 24);
             
             if (diffDays < 0) return { status: "Overdue", color: "orange" };
@@ -52,7 +61,7 @@
         }
 
         transformers.forEach(transformer => {
-            const { status, color } = getStatus(transformer.testingDate);
+            const { status, color } = getStatus(transformer.dueDate);
 
             const markerIcon = L.divIcon({
                 className: "",
@@ -61,7 +70,7 @@
             });
 
             const marker = L.marker([transformer.lat, transformer.lng], { icon: markerIcon }).addTo(map);
-            marker.bindPopup(`<b>${transformer.name}</b><br>Testing Date: ${transformer.testingDate}<br>Status: ${status}`);
+            marker.bindPopup(`<b>${transformer.name}</b><br>Testing Date: ${transformer.testingDate}<br>Due Date: ${transformer.dueDate}<br>Status: ${status}`);
 
             if (status === "Due Soon") {
                 setInterval(() => {
